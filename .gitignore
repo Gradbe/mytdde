@@ -50,3 +50,25 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Ignore executables without extension (heuristic)
+# Only ignore files without extension that are executable
+# This uses git attributes trick (see below for optional extension)
+
+# Ignore build directories
+build/
+out/
+bin/
+obj/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*~
+
+# Ignore editor/IDE-specific stuff
+.vscode/
+*.swp
+*.swo
+
+
