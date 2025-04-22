@@ -27,8 +27,8 @@ void LedDriver_TurnOn(int LedNumber){
 }
 
 void LedDriver_TurnOff(int LedNumber){
-	if (LedNumber > 16 || LedNumber < 1)
-		return;
+//	if (LedNumber > 16 || LedNumber < 1)
+//		return;
 	ledsImage &= ~convertLedNumberToBit(LedNumber);
 	updateHardware();
 }
