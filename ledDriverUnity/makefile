@@ -1,5 +1,5 @@
 C_COMPILER :=gcc
-UNITY_ROOT=../Unity
+UNITY_ROOT=../../Unity
 INC_DIRS=-Iinclude -Imocks -Isrc -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=-DUNITY_FIXTURE_NO_EXTRAS
 TARGET=run_tests
