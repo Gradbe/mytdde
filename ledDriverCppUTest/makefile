@@ -1,24 +1,37 @@
-CXX := g++
-CPPFLAGS := -Iinclude -Imocks
-#CPPFLAGS := -I../cpputest/include -Iinclude -Imocks
-CXXFLAGS := -Wall -Werror -g
+C_COMPILER = gcc
+CPP_COMPILER = g++
 
-SRC:= src/LedDriver.c
+CPPFLAGS += -Iinclude -Imocks -I/usr/local/include
+CFLAGS += -std=c99 -Wall -Werror
+LDFLAGS += -L/usr/local/lib -lCppUTest -lCppUTestExt
 
-TEST_SRC := \
-	test/LedDriverTest.cpp\
-	mocks/RuntimeErrorStub.c\
-	test/AllTests.cpp
+SRC_DIR = src
+INC_DIR = include
+MOCK_DIR = mocks
+TEST_DIR = test
 
-TARGET := runTests
-LIBS := /usr/local/lib/libCppUTest.a
+C_SOURCES = $(SRC_DIR)/LedDriver.c $(MOCK_DIR)/RuntimeErrorStub.c
+CPP_SOURCES = $(TEST_DIR)/LedDriverTest.cpp $(TEST_DIR)/AllTests.cpp
+
+OBJECTS = $(C_SOURCES:.c=.o) $(CPP_SOURCES:.cpp=.o)
+TARGET = runTests
+
+.PHONY: all clean test
 
 all: $(TARGET)
+	./$(TARGET)
 
-$(TARGET): 
-	$(CXX) $(TEST_SRC) $(SRC) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LIBS)
+$(TARGET): $(OBJECTS)
+	$(CPP_COMPILER) -o $@ $^ $(LDFLAGS)
+
+%.o: %.c
+	$(C_COMPILER) -c $< -o $@ $(CPPFLAGS) $(CFLAGS)
+
+%.o: %.cpp
+	$(CPP_COMPILER) -c $< -o $@ $(CPPFLAGS)
+
+test: $(TARGET)
 	./$(TARGET)
 
 clean:
-	rm -f $(TARGET)
-
+	rm -f $(SRC_DIR)/*.o $(MOCK_DIR)/*.o $(TEST_DIR)/*.o $(TARGET)

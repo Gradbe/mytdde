@@ -1,10 +1,6 @@
 #ifndef LED_DRIVER_H
 #define LED_DRIVER_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stdint.h>
 typedef int BOOL;
 enum {FALSE=0, TRUE=1};
@@ -19,10 +15,6 @@ BOOL LedDriver_IsOn(int ledNumber);
 BOOL LedDriver_IsOff(int ledNumber);
 
 // Other C declarations...
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
 
