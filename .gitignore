@@ -1,3 +1,6 @@
+# Ignore all files named 'run_tests' in any directory
+**/run_tests
+
 # Prerequisites
 *.d
 
