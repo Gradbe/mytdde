@@ -1,15 +1,22 @@
 CXX := g++
-CPPFLAGS := -I../cpputest/include
+CPPFLAGS := -Iinclude -Imocks
+#CPPFLAGS := -I../cpputest/include -Iinclude -Imocks
 CXXFLAGS := -Wall -Werror -g
 
-TEST_SRC := test/SprintfTest.cpp test/AllTests.cpp
+SRC:= src/LedDriver.c
+
+TEST_SRC := \
+	test/LedDriverTest.cpp\
+	mocks/RuntimeErrorStub.c\
+	test/AllTests.cpp
+
 TARGET := runTests
 LIBS := /usr/local/lib/libCppUTest.a
 
 all: $(TARGET)
 
-$(TARGET): $(TEST_SRC)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LIBS)
+$(TARGET): 
+	$(CXX) $(TEST_SRC) $(SRC) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LIBS)
 	./$(TARGET)
 
 clean:
