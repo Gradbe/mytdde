@@ -7,7 +7,9 @@ TEST_GROUP_RUNNER(LedDriver){
 	RUN_TEST_CASE(LedDriver, TurnOffLedOne);
 	RUN_TEST_CASE(LedDriver, TurnOnMultipleLeds);
 	RUN_TEST_CASE(LedDriver, TurnOffAnyLed);
+	RUN_TEST_CASE(LedDriver, TurnOffMultipleLEDS);
 	RUN_TEST_CASE(LedDriver, TurnOnAllLeds);
+	RUN_TEST_CASE(LedDriver, TurnOffAllLeds);
 	RUN_TEST_CASE(LedDriver, LedMemoryIsNotReadable);
 	RUN_TEST_CASE(LedDriver, UpperAndLowerBounds);
 	RUN_TEST_CASE(LedDriver, OutOfBoundsTurnOnDoesNoHarm);

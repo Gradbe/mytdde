@@ -97,11 +97,31 @@ TEST(LedDriver, IsOn){
 TEST(LedDriver, OutOfBoundsLedsAreOff){
 	TEST_ASSERT_FALSE(LedDriver_IsOn(0));
 	TEST_ASSERT_FALSE(LedDriver_IsOn(17));
+	TEST_ASSERT_TRUE(LedDriver_IsOff(784));
 	TEST_ASSERT_FALSE(LedDriver_IsOn(3471));
 }
 
 TEST(LedDriver, IsOff){
 	TEST_ASSERT_TRUE(LedDriver_IsOff(2));
 	LedDriver_TurnOn(2);
-	TEST_ASSERT_FALSE(LedDriver_IsOff(2));
+	TEST_ASSERT_FALSE(LedDriver_IsOff(2)); 
+}
+
+TEST(LedDriver, TurnOffMultipleLEDS){
+	LedDriver_TurnAllOn();
+	LedDriver_TurnOff(8);
+	LedDriver_TurnOff(9);
+	TEST_ASSERT_EQUAL_HEX16(0xfe7f, virtualLeds);
+	TEST_ASSERT_EQUAL_HEX16(~(0x180)&0xffff, virtualLeds);
+	LedDriver_TurnAllOn();
+	LedDriver_TurnOff(1);
+	LedDriver_TurnOff(5);
+	LedDriver_TurnOff(9);
+	TEST_ASSERT_EQUAL_HEX16(~(0x111)&0xffff, virtualLeds);
+}
+
+TEST(LedDriver, TurnOffAllLeds){
+	LedDriver_TurnAllOn();
+	LedDriver_TurnAllOff();
+	TEST_ASSERT_EQUAL_HEX16(0, virtualLeds);
 }
