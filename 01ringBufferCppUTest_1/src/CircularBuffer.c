@@ -50,6 +50,11 @@ char RingBuffer_Get(RingBuffer_t* buffer){
 }
 
 
+bool RingBuffer_Peek(RingBuffer_t* buffer, char* c){
+	if(buffer->count == 0) return false;
+	*c = buffer->data[buffer->tail];
+	return true;
+}
 
 
 	 

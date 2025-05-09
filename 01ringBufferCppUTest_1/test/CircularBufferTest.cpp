@@ -76,3 +76,17 @@ TEST(RingBuffer, ReadBackInOrder){
 TEST(RingBuffer, FailReadOnEmpty){
 	CHECK_EQUAL(0, RingBuffer_Get(buffer));
 }
+
+TEST(RingBuffer, PeekDoesNotRemoveData){
+	RingBuffer_Put(buffer, 'q');
+	char c = 0;
+	CHECK_TRUE(RingBuffer_Peek(buffer, &c));
+	CHECK_EQUAL('q', c);
+	CHECK_FALSE(RingBuffer_IsEmpty(buffer));
+}
+
+TEST(RingBuffer, PeekFailsIfEmpty){
+	char c = 0;
+	CHECK_FALSE(RingBuffer_Peek(buffer, &c));
+}
+	
