@@ -11,7 +11,7 @@ TEST_DIR = test
 
 # Explicitly include only the needed .c files (excluding real_hardware.c)
 #C_SOURCES = $(SRC_DIR)/LedDriver.c $(MOCK_DIR)/RuntimeErrorStub.c
-C_SOURCES = $(SRC_DIR)/CircularBuffer.c 
+C_SOURCES = $(SRC_DIR)/CircularBuffer.c $(SRC_DIR)/Utils.c $(MOCK_DIR)/FormatOutputSpy.c
 CPP_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
 
 OBJECTS = $(C_SOURCES:.c=.o) $(CPP_SOURCES:.cpp=.o)
