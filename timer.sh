@@ -1,5 +1,4 @@
 #!/bin/bash
-
 countdown() {
     start="$(( $(date '+%s') + $1))"
     while [ $start -ge $(date +%s) ]; do

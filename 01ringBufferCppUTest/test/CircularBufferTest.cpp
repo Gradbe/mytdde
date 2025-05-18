@@ -6,8 +6,6 @@ extern "C"
 #include "FormatOutputSpy.h"
 }
 
-#include "CppUTest/TestHarness.h"
-
 TEST_GROUP(CircularBuffer){
 	CircularBuffer_t* buffer;
 	void	setup(){
