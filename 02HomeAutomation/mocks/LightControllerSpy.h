@@ -1,7 +1,7 @@
 #ifndef D_LightControllerSpy_H
 #define D_LightControllerSpy_H
 
-#include "LightController.h"
+#include "LightControllerSpy.h"
 
 enum {
 	LIGHT_ID_UNKNOWN = -1,

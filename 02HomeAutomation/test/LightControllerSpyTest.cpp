@@ -2,12 +2,12 @@
 
 extern "C"
 {
+#include "LightControllerSpy.h"
 #include "FakeTime.h"
 #include "LightScheduler.h"
-#include "LightControllerSpy.h"
 }
 
-TEST_GROUP(LightScheduler){
+TEST_GROUP(LightControllerSpy){
 	void	setup(){
 		LigthController_Create();
 	}
@@ -15,12 +15,14 @@ TEST_GROUP(LightScheduler){
 	}
 };
 
-
-TEST(LightScheduler, NoScheduleNothingHappens){
-	FakeTimeService_SetDay(MONDAY);
-	FakeTimeService_SetMinute(100);
-	LightScheduler_WakeUp();
+TEST(LightControllerSpy, Create){
 	LONGS_EQUAL(LIGHT_ID_UNKNOWN, LightControllerSpy_GetLastId());
 	LONGS_EQUAL(LIGHT_STATE_UNKNOWN,LightControllerSpy_GetLastState());
+}
+
+TEST(LightControllerSpy, RememberLastIdAndState){
+	LightController_On(10);
+	LONGS_EQUAL(10, LightControllerSpy_GetLastId());
+	LONGS_EQUAL(LIGHT_ON,LightControllerSpy_GetLastState());
 }
 
