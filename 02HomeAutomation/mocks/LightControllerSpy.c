@@ -9,9 +9,12 @@
 static int lastId;
 static int lastState;
 
-void LigthController_Create(){
+void LightController_Create(){
 	lastId = LIGHT_ID_UNKNOWN;
 	lastState = LIGHT_STATE_UNKNOWN;
+}
+
+void LightController_Destroy(){
 }
 
 void LightController_On(int lightNum){

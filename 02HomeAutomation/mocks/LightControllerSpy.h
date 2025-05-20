@@ -10,7 +10,8 @@ enum {
 	LIGHT_OFF = 0
 };
 
-void LigthController_Create();
+void LightController_Create();
+void LightController_Destroy();
 void LightController_On(int lightNum);
 
 int LightControllerSpy_GetLastId();

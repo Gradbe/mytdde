@@ -3,13 +3,13 @@
 extern "C"
 {
 #include "LightControllerSpy.h"
-#include "FakeTime.h"
+#include "FakeTimeService.h"
 #include "LightScheduler.h"
 }
 
 TEST_GROUP(LightControllerSpy){
 	void	setup(){
-		LigthController_Create();
+		LightController_Create();
 	}
 	void teardown(){
 	}

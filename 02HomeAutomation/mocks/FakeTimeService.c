@@ -1,4 +1,4 @@
-#include "FakeTime.h"
+#include "FakeTimeService.h"
 
 static Time t;
 
@@ -15,6 +15,6 @@ void FakeTimeService_SetMinute(int minute){
 	t.minuteOfDay = minute;
 }
 
-void FakeTimeService_SetDay(day_e day){
+void FakeTimeService_SetDay(Day day){
 	t.dayOfWeek = day;
 }

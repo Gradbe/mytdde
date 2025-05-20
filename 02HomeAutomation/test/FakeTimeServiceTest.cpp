@@ -2,7 +2,7 @@
 
 extern "C"
 {
-#include "FakeTime.h"
+#include "FakeTimeService.h"
 }
 
 TEST_GROUP(FakeTimeService){

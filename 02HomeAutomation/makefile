@@ -10,7 +10,7 @@ MOCK_DIR = mocks
 TEST_DIR = test
 
 # Explicitly include only the needed .c files (excluding real_hardware.c)
-C_SOURCES = $(SRC_DIR)/LightScheduler.c $(MOCK_DIR)/LightControllerSpy.c $(MOCK_DIR)/FakeTime.c
+C_SOURCES = $(SRC_DIR)/LightScheduler.c $(MOCK_DIR)/LightControllerSpy.c $(MOCK_DIR)/FakeTimeService.c
 CPP_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
 
 OBJECTS = $(C_SOURCES:.c=.o) $(CPP_SOURCES:.cpp=.o)
