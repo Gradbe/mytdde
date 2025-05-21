@@ -11,5 +11,8 @@ typedef enum{
 	SUNDAY = 1, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
 }Day;
 
+void TimeService_GetTime(Time*);
+void TimeService_Create();
+
 #endif
 

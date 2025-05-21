@@ -1,7 +1,7 @@
-#ifndef D_LightControllerSpy_H
-#define D_LightControllerSpy_H
+#ifndef LIGHT_CONTROLLER_SPY_H 
+#define LIGHT_CONTROLLER_SPY_H
 
-#include "LightControllerSpy.h"
+#include "LightController.h"
 
 enum {
 	LIGHT_ID_UNKNOWN = -1,
@@ -10,9 +10,6 @@ enum {
 	LIGHT_OFF = 0
 };
 
-void LightController_Create();
-void LightController_Destroy();
-void LightController_On(int lightNum);
 
 int LightControllerSpy_GetLastId();
 int LightControllerSpy_GetLastState();
