@@ -85,6 +85,50 @@ TEST(LightScheduler, ScheduleWeekendAndItsSaturday){
 	checkLightState(3, LIGHT_ON);
 }
 
+TEST(LightScheduler, ScheduleWeekendAndItsSunday){
+	LightScheduler_ScheduleTurnOn(3, WEEKEND, 1200);
+	setTimeTo(SUNDAY, 1200);
+	LightScheduler_WakeUp();
+	checkLightState(3, LIGHT_ON);
+}
+
+TEST(LightScheduler, ScheduleWeekendAndItsMonday){
+	LightScheduler_ScheduleTurnOn(3, WEEKEND, 1200);
+	setTimeTo(MONDAY, 1200);
+	LightScheduler_WakeUp();
+	checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
+}
+
+TEST(LightScheduler, ScheduleWeekdayAndItsSunday){
+	LightScheduler_ScheduleTurnOn(3, WEEKDAY, 1200);
+	setTimeTo(SUNDAY, 1200);
+	LightScheduler_WakeUp();
+	checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
+}
+
+
+TEST(LightScheduler, ScheduleWeekdayAndItsMonday){
+	LightScheduler_ScheduleTurnOn(3, WEEKDAY, 1200);
+	setTimeTo(MONDAY, 1200);
+	LightScheduler_WakeUp();
+	checkLightState(3, LIGHT_ON);
+}
+
+TEST_GROUP(LightSchedulerInitAndCleanup){
+};
+
+TEST(LightSchedulerInitAndCleanup, CreateStartsOneMinuteAlarm){
+	LightScheduler_Create();
+	POINTERS_EQUAL((void*)LightScheduler_WakeUp,
+			(void*)FakeTimeService_GetAlarmCallback());
+	
+	LONGS_EQUAL(60, FakeTimeService_GetAlarmPeriod());
+	LightScheduler_Destroy();
+}
+
+
+
+
 
 
 

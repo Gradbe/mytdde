@@ -26,7 +26,9 @@ static bool DoesLightRespondToday(Time* time, Day reactionDay){
 		return true;
 	if (reactionDay == today)
 		return true;
-	if (reactionDay == WEEKEND && (today == SATURDAY))
+	if (reactionDay == WEEKEND && (today == SATURDAY || today==SUNDAY))
+		return true;
+	if (reactionDay == WEEKDAY && today < SATURDAY && today > SUNDAY)
 		return true;
 	return false;
 }
@@ -51,6 +53,7 @@ static void processEventDueNow(Time* time, ScheduledLightEvent* lightEvent){
 
 void LightScheduler_Create(void){
 	scheduledEvent.id = UNUSED; 
+	TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_WakeUp);
 }
 
 void LightScheduler_Destroy(){
