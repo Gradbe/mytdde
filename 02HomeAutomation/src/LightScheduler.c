@@ -2,13 +2,52 @@
 #include "LightScheduler.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct{
 	int id;
 	int minuteOfDay;
+	int event;
+	Day day;
 }ScheduledLightEvent;
 
 static ScheduledLightEvent scheduledEvent;
+
+static void scheduleEvent(int id, Day day, int minuteOfDay, int event){
+	scheduledEvent.id = id;
+	scheduledEvent.day = day;
+	scheduledEvent.minuteOfDay = minuteOfDay;
+	scheduledEvent.event = event;
+}
+
+static bool DoesLightRespondToday(Time* time, Day reactionDay){
+	int today = time->dayOfWeek; 
+	if (reactionDay == EVERYDAY) 
+		return true;
+	if (reactionDay == today)
+		return true;
+	if (reactionDay == WEEKEND && (today == SATURDAY))
+		return true;
+	return false;
+}
+
+static void operateLight(ScheduledLightEvent* event){
+	if (event->event == LIGHT_ON)
+		LightController_On(event->id);
+	else if (event->event == LIGHT_OFF)
+		LightController_Off(event->id);
+}
+
+static void processEventDueNow(Time* time, ScheduledLightEvent* lightEvent){
+	if(lightEvent->id == UNUSED)
+		return;
+	if(!DoesLightRespondToday(time, lightEvent->day))
+		return;
+	if (time->minuteOfDay != lightEvent->minuteOfDay)
+		return;
+	operateLight(lightEvent);
+}
+
 
 void LightScheduler_Create(void){
 	scheduledEvent.id = UNUSED; 
@@ -20,19 +59,15 @@ void LightScheduler_Destroy(){
 void LightScheduler_WakeUp(){
 	Time time;
 	TimeService_GetTime(&time);
-	if(scheduledEvent.id == UNUSED)
-		return;
-	if (time.minuteOfDay != scheduledEvent.minuteOfDay)
-		return;
-	LightController_On(scheduledEvent.id);
-}
-
-void LightScheduler_TurnOn(int id, Day d, int minute){
+	processEventDueNow(&time, &scheduledEvent);
 }
 
 void LightScheduler_ScheduleTurnOn(int id, Day d, int minute){
-	scheduledEvent.id = id;
-	scheduledEvent.minuteOfDay = minute;
+	scheduleEvent(id, d, minute, LIGHT_ON);
+}
+
+void LightScheduler_ScheduleTurnOff(int id, Day d, int minute){
+	scheduleEvent(id, d, minute, LIGHT_OFF);
 }
 
 
