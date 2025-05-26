@@ -28,6 +28,12 @@ void TimeService_SetPeriodicAlarmInSeconds(int seconds, WakeupCallback cb){
 	callback = cb;
 	period = seconds;
 }
+void TimeService_CancelPeriodicAlarmInSecond(int seconds, WakeupCallback cb){
+	if (cb == callback && period == seconds){
+		callback = NULL;
+		period = 0;
+	}
+}
 
 WakeupCallback FakeTimeService_GetAlarmCallback(void){
 	return callback;

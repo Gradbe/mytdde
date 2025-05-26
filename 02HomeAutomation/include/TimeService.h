@@ -11,6 +11,7 @@ typedef void(*WakeupCallback)(void);
 void TimeService_GetTime(Time*);
 void TimeService_Create();
 void TimeService_SetPeriodicAlarmInSeconds(int seconds, WakeupCallback);
+void TimeService_CancelPeriodicAlarmInSecond(int seconds, WakeupCallback cb);
 
 #endif
 

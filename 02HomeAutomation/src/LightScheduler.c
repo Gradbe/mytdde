@@ -13,6 +13,15 @@ typedef struct{
 
 static ScheduledLightEvent scheduledEvent;
 
+void LightScheduler_Create(void){
+	scheduledEvent.id = UNUSED; 
+	TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_WakeUp);
+}
+
+void LightScheduler_Destroy(){
+	TimeService_CancelPeriodicAlarmInSecond(60, LightScheduler_WakeUp);
+}
+
 static void scheduleEvent(int id, Day day, int minuteOfDay, int event){
 	scheduledEvent.id = id;
 	scheduledEvent.day = day;
@@ -48,15 +57,6 @@ static void processEventDueNow(Time* time, ScheduledLightEvent* lightEvent){
 	if (time->minuteOfDay != lightEvent->minuteOfDay)
 		return;
 	operateLight(lightEvent);
-}
-
-
-void LightScheduler_Create(void){
-	scheduledEvent.id = UNUSED; 
-	TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_WakeUp);
-}
-
-void LightScheduler_Destroy(){
 }
 
 void LightScheduler_WakeUp(){
