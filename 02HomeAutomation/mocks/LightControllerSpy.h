@@ -7,6 +7,7 @@
 
 int LightControllerSpy_GetLastId();
 int LightControllerSpy_GetLastState();
+int LightControllerSpy_GetLightState(int id);
 
 
 #endif

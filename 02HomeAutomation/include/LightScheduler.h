@@ -7,7 +7,10 @@ typedef enum{
 	SUNDAY = 1, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
 }Day;
 
-enum {UNUSED = -1};
+enum {
+	UNUSED = -1,
+	MAX_EVENTS = 16
+};
 
 void LightScheduler_Create();
 void LightScheduler_Destroy();

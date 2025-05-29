@@ -6,6 +6,9 @@ enum {
 	LIGHT_ON = 1,
 	LIGHT_OFF = 0
 };
+enum { 
+	MAX_LIGHTS = 32
+};
 
 void LightController_Create();
 void LightController_Destroy();

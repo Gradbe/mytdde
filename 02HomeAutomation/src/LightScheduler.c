@@ -12,10 +12,14 @@ typedef struct{
 }ScheduledLightEvent;
 
 static ScheduledLightEvent scheduledEvent;
+static ScheduledLightEvent scheduledEvents[3];
 
 void LightScheduler_Create(void){
 	scheduledEvent.id = UNUSED; 
-	TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_WakeUp);
+	for (int i = 0; i < MAX_EVENTS; i++){
+		scheduledEvents[i].id = UNUSED;
+		TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_WakeUp);
+	}
 }
 
 void LightScheduler_Destroy(){
@@ -23,6 +27,17 @@ void LightScheduler_Destroy(){
 }
 
 static void scheduleEvent(int id, Day day, int minuteOfDay, int event){
+	int i;
+	for (i = 0; i < MAX_EVENTS; i++){
+		if (scheduledEvents[i].id == UNUSED){
+			scheduledEvents[i].id = id;
+			scheduledEvents[i].day = day;
+			scheduledEvents[i].minuteOfDay = minuteOfDay;
+			scheduledEvents[i].event = event;
+			break;
+		}
+	}
+
 	scheduledEvent.id = id;
 	scheduledEvent.day = day;
 	scheduledEvent.minuteOfDay = minuteOfDay;
@@ -62,6 +77,9 @@ static void processEventDueNow(Time* time, ScheduledLightEvent* lightEvent){
 void LightScheduler_WakeUp(){
 	Time time;
 	TimeService_GetTime(&time);
+	for (int i = 0; i < MAX_EVENTS; i++){
+		processEventDueNow(&time, &scheduledEvents[i]);
+	}
 	processEventDueNow(&time, &scheduledEvent);
 }
 
