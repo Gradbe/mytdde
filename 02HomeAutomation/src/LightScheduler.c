@@ -11,11 +11,9 @@ typedef struct{
 	Day day;
 }ScheduledLightEvent;
 
-static ScheduledLightEvent scheduledEvent;
-static ScheduledLightEvent scheduledEvents[3];
+static ScheduledLightEvent scheduledEvents[MAX_EVENTS];
 
 void LightScheduler_Create(void){
-	scheduledEvent.id = UNUSED; 
 	for (int i = 0; i < MAX_EVENTS; i++){
 		scheduledEvents[i].id = UNUSED;
 		TimeService_SetPeriodicAlarmInSeconds(60, LightScheduler_WakeUp);
@@ -26,7 +24,7 @@ void LightScheduler_Destroy(){
 	TimeService_CancelPeriodicAlarmInSecond(60, LightScheduler_WakeUp);
 }
 
-static void scheduleEvent(int id, Day day, int minuteOfDay, int event){
+static int scheduleEvent(int id, Day day, int minuteOfDay, int event){
 	int i;
 	for (i = 0; i < MAX_EVENTS; i++){
 		if (scheduledEvents[i].id == UNUSED){
@@ -34,14 +32,10 @@ static void scheduleEvent(int id, Day day, int minuteOfDay, int event){
 			scheduledEvents[i].day = day;
 			scheduledEvents[i].minuteOfDay = minuteOfDay;
 			scheduledEvents[i].event = event;
-			break;
+			return LS_OK;
 		}
 	}
-
-	scheduledEvent.id = id;
-	scheduledEvent.day = day;
-	scheduledEvent.minuteOfDay = minuteOfDay;
-	scheduledEvent.event = event;
+	return LS_TOO_MANY_EVENTS;
 }
 
 static bool DoesLightRespondToday(Time* time, Day reactionDay){
@@ -80,15 +74,22 @@ void LightScheduler_WakeUp(){
 	for (int i = 0; i < MAX_EVENTS; i++){
 		processEventDueNow(&time, &scheduledEvents[i]);
 	}
-	processEventDueNow(&time, &scheduledEvent);
 }
 
-void LightScheduler_ScheduleTurnOn(int id, Day d, int minute){
-	scheduleEvent(id, d, minute, LIGHT_ON);
+int LightScheduler_ScheduleTurnOn(int id, Day d, int minute){
+	return scheduleEvent(id, d, minute, LIGHT_ON);
 }
 
-void LightScheduler_ScheduleTurnOff(int id, Day d, int minute){
-	scheduleEvent(id, d, minute, LIGHT_OFF);
+int LightScheduler_ScheduleTurnOff(int id, Day d, int minute){
+	return scheduleEvent(id, d, minute, LIGHT_OFF);
 }
 
-
+void LightScheduler_ScheduleRemove(int id, Day d, int minute){
+	int i;
+	for (i = 0; i < MAX_EVENTS; i++){
+		if (scheduledEvents[i].id == id && 
+		   scheduledEvents[i].day == d &&
+		   scheduledEvents[i].minuteOfDay == minute)	
+			scheduledEvents[i].id = UNUSED;
+	}
+}
