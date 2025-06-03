@@ -1,5 +1,6 @@
 #include "LightController.h"
 #include "LightScheduler.h"
+#include <stdio.h>
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -92,4 +93,7 @@ void LightScheduler_ScheduleRemove(int id, Day d, int minute){
 		   scheduledEvents[i].minuteOfDay == minute)	
 			scheduledEvents[i].id = UNUSED;
 	}
+/*	for (int j = 0; j < 10; j++){
+		printf("Event %d, On/Off %d\n", scheduledEvents[j].id, scheduledEvents[j].event);
+	}*/
 }

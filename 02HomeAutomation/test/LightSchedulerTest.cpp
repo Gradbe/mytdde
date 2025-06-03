@@ -1,4 +1,5 @@
 #include "CppUTest/TestHarness.h"
+#include <iostream>
 
 extern "C"
 {
@@ -160,4 +161,18 @@ TEST(LightScheduler, RemoveRecyclesScheduleSlot){
 	}
 	LightScheduler_ScheduleRemove(6, MONDAY, 600);
 	LONGS_EQUAL(LS_OK, LightScheduler_ScheduleTurnOn(6, MONDAY, 600+i));
+}
+
+TEST(LightScheduler, RemoveMultipeSchecduleEvent){
+	LightScheduler_ScheduleTurnOn(9, MONDAY, 500);
+	LightScheduler_ScheduleTurnOn(7, MONDAY, 500);
+//	printf("**************Before remove\n");
+	LightScheduler_ScheduleRemove(9, MONDAY, 500);
+//	printf("**************After remove\n");
+
+
+	setTimeTo(MONDAY, 500);
+	LightScheduler_WakeUp();
+	checkLightState(7, LIGHT_ON);
+	checkLightState(9, LIGHT_STATE_UNKNOWN);
 }

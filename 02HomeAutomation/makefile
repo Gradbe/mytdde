@@ -2,7 +2,7 @@ C_COMPILER = gcc
 CPP_COMPILER = g++
 
 INCLUDES = -Iinclude -Imocks -I/usr/local/include
-CFLAGS += -std=c99 -Wall -Werror
+CFLAGS += -std=c99 -Wall -Werror -g3
 LDFLAGS += -L/usr/local/lib -lCppUTest -lCppUTestExt
 
 SRC_DIR = src

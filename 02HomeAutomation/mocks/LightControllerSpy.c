@@ -13,6 +13,8 @@ static int lights[MAX_LIGHTS];
 void LightController_Create(){
 	lastId = LIGHT_ID_UNKNOWN;
 	lastState = LIGHT_STATE_UNKNOWN;
+	for (int i = 0; i < MAX_LIGHTS; i++)
+		lights[i] = LIGHT_STATE_UNKNOWN;
 }
 
 void LightController_Destroy(){
