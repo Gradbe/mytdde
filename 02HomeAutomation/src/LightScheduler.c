@@ -96,3 +96,6 @@ void LightScheduler_ScheduleRemove(int id, Day d, int minute){
 			scheduledEvents[i].id = UNUSED;
 	}
 }
+
+void LightScheduler_Randomize(int id, Day d, int minute){
+}

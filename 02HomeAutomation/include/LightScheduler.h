@@ -19,6 +19,7 @@ void LightScheduler_Destroy();
 void LightScheduler_WakeUp();
 int LightScheduler_ScheduleTurnOn(int id, Day d, int minute);
 int LightScheduler_ScheduleTurnOff(int id, Day d, int minute);
+void LightScheduler_Randomize(int id, Day d, int minute);
 void LightScheduler_ScheduleRemove(int id, Day d, int minute);
 
 

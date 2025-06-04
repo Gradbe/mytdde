@@ -13,7 +13,8 @@ TEST_DIR = test
 C_SOURCES = $(SRC_DIR)/LightScheduler.c\
 	    $(SRC_DIR)/RandomMinute.c\
 	    $(MOCK_DIR)/LightControllerSpy.c \
-	    $(MOCK_DIR)/FakeTimeService.c
+	    $(MOCK_DIR)/FakeTimeService.c\
+	    $(MOCK_DIR)/FakeRandomMinute.c
 CPP_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
 
 OBJECTS = $(C_SOURCES:.c=.o) $(CPP_SOURCES:.cpp=.o)
