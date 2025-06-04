@@ -26,6 +26,8 @@ void LightScheduler_Destroy(){
 }
 
 static int scheduleEvent(int id, Day day, int minuteOfDay, int event){
+	if (id > MAX_LIGHTS || id < 0)
+		return LS_ID_OUT_OF_BOUNDS;
 	int i;
 	for (i = 0; i < MAX_EVENTS; i++){
 		if (scheduledEvents[i].id == UNUSED){
@@ -93,7 +95,4 @@ void LightScheduler_ScheduleRemove(int id, Day d, int minute){
 		   scheduledEvents[i].minuteOfDay == minute)	
 			scheduledEvents[i].id = UNUSED;
 	}
-/*	for (int j = 0; j < 10; j++){
-		printf("Event %d, On/Off %d\n", scheduledEvents[j].id, scheduledEvents[j].event);
-	}*/
 }

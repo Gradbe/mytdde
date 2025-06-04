@@ -9,10 +9,10 @@ typedef enum{
 
 enum {
 	UNUSED = -1,
-	MAX_EVENTS = 128
+	MAX_EVENTS = 128,
 };
 
-enum { LS_OK, LS_TOO_MANY_EVENTS};
+enum { LS_OK, LS_TOO_MANY_EVENTS, LS_ID_OUT_OF_BOUNDS};
 
 void LightScheduler_Create();
 void LightScheduler_Destroy();
