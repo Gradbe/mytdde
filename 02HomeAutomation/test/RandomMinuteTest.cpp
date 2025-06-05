@@ -25,6 +25,7 @@ TEST_GROUP(RandomMinute){
 TEST(RandomMinute, GetIsInRange){
 	for (int i = 0; i < 100; i++){
 		minute = RandomMinute_Get();
+//		printf("Minute is %d\n", minute);
 		AssertMinuteIsInRange();
 	}
 }
