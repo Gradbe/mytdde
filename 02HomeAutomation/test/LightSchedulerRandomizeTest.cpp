@@ -15,9 +15,12 @@ TEST_GROUP(LightSchedulerRandomize){
 		LightController_Create();
 		LightScheduler_Create();
 		savedRandomMinute_Get = RandomMinute_Get;
-//		RandomMinute_Get = FakeRandomMinute_Get;
+		RandomMinute_Get = FakeRandomMinute_Get;
 	}
 	void teardown(){
+		LightScheduler_Destroy();
+		LightController_Destroy();
+		RandomMinute_Get = savedRandomMinute_Get;
 	}
 	void setTimeTo(Day day, int minute){
 		FakeTimeService_SetDay(day);
