@@ -11,12 +11,8 @@ TEST_DIR = test
 
 # Explicitly include only the needed .c files (excluding real_hardware.c)
 C_SOURCES = $(SRC_DIR)/Flash.c\
-	    $(SRC_DIR)/RandomMinute.c\
-	    $(SRC_DIR)/Utils.c\
-	    $(MOCK_DIR)/LightControllerSpy.c \
-	    $(MOCK_DIR)/FakeTimeService.c\
-	    $(MOCK_DIR)/FormatOutputSpy.c\
-	    $(MOCK_DIR)/FakeRandomMinute.c
+	    $(MOCK_DIR)/MockIO.c 
+
 CPP_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
 
 OBJECTS = $(C_SOURCES:.c=.o) $(CPP_SOURCES:.cpp=.o)
