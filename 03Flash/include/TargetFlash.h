@@ -7,11 +7,13 @@ typedef enum {
 } Flash_Registers;
 
 typedef enum {
-	ProgramCommand = 0x40
+	ProgramCommand = 0x40,
+	Reset = 0xff
 } Flash_Command;
 
 typedef enum {
-	ReadyBit = 1<<7
+	ReadyBit = 1<<7,
+	VppErrorBit = 1<<3
 } StatusRegisterBits;
 
 #endif

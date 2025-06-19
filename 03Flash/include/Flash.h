@@ -8,7 +8,8 @@ void Flash_Destroy(void);
 int Flash_Write(ioAddress offset, ioData data);
 
 typedef enum{
-	FLASH_SUCCESS = 0
+	FLASH_SUCCESS = 0, 
+	FLASH_VPP_ERROR
 } FlashStatus;
 
 #endif

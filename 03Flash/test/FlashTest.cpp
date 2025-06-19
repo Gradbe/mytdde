@@ -18,6 +18,7 @@ TEST_GROUP(Flash){
 
 		MockIO_Create(10);
 		Flash_Create();
+
 	}
 	void teardown(){
 		Flash_Destroy();
@@ -34,3 +35,29 @@ TEST(Flash, WriteSucceeds_ReadyImmediately){
 	result = Flash_Write(address, data);
 	LONGS_EQUAL(FLASH_SUCCESS, result);
 }
+
+TEST(Flash, WriteSucceeds_NotImmediatelyReady){
+	MockIO_Expect_Write(CommandRegister, ProgramCommand);
+	MockIO_Expect_Write(address, data);
+	MockIO_Expect_ReadThenReturn(StatusRegister, 0);
+	MockIO_Expect_ReadThenReturn(StatusRegister, 0);
+	MockIO_Expect_ReadThenReturn(StatusRegister, 0);
+	MockIO_Expect_ReadThenReturn(StatusRegister, 0);
+	MockIO_Expect_ReadThenReturn(StatusRegister, 0);
+	MockIO_Expect_ReadThenReturn(StatusRegister, 0);
+	MockIO_Expect_ReadThenReturn(StatusRegister, ReadyBit);
+	MockIO_Expect_ReadThenReturn(address, data);
+	result = Flash_Write(address, data);
+	LONGS_EQUAL(FLASH_SUCCESS, result);
+}
+
+TEST(Flash, WriteFails_VppError){
+	MockIO_Expect_Write(CommandRegister, ProgramCommand);
+	MockIO_Expect_Write(address, data);
+	MockIO_Expect_ReadThenReturn(StatusRegister, ReadyBit | VppErrorBit);
+	MockIO_Expect_Write(CommandRegister, Reset);
+	
+	result = Flash_Write(address, data);
+	LONGS_EQUAL(FLASH_VPP_ERROR, result);
+}
+
