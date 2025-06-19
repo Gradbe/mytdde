@@ -13,7 +13,10 @@ typedef enum {
 
 typedef enum {
 	ReadyBit = 1<<7,
-	VppErrorBit = 1<<3
+	VppErrorBit = 1<<3,
+	EraseErrorBit = 1<<4,
+	BlockProtectionErrorBit = 1<<5,
+	ProgramErrorBit = 1<<6
 } StatusRegisterBits;
 
 #endif

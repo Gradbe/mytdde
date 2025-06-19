@@ -61,3 +61,35 @@ TEST(Flash, WriteFails_VppError){
 	LONGS_EQUAL(FLASH_VPP_ERROR, result);
 }
 
+TEST(Flash, WriteFails_EraseErorBit){
+	MockIO_Expect_Write(CommandRegister, ProgramCommand);
+	MockIO_Expect_Write(address, data);
+	MockIO_Expect_ReadThenReturn(StatusRegister, ReadyBit | EraseErrorBit);
+	MockIO_Expect_Write(CommandRegister, Reset);
+	
+	result = Flash_Write(address, data);
+	LONGS_EQUAL(FLASH_ERASE_ERROR, result);
+}
+
+TEST(Flash, WriteFails_BlockProtectionErrorBit){
+	MockIO_Expect_Write(CommandRegister, ProgramCommand);
+	MockIO_Expect_Write(address, data);
+	MockIO_Expect_ReadThenReturn(StatusRegister, ReadyBit | BlockProtectionErrorBit);
+	MockIO_Expect_Write(CommandRegister, Reset);
+	
+	result = Flash_Write(address, data);
+	LONGS_EQUAL(FLASH_BLOCK_ERROR, result);
+}
+
+TEST(Flash, WriteFails_FlashReadbackError){
+	MockIO_Expect_Write(CommandRegister, ProgramCommand);
+	MockIO_Expect_Write(address, data);
+	MockIO_Expect_ReadThenReturn(StatusRegister, ReadyBit);
+	MockIO_Expect_ReadThenReturn(address, data-1);
+	
+	result = Flash_Write(address, data);
+	LONGS_EQUAL(FLASH_READ_BACK_ERROR, result);
+}
+
+
+

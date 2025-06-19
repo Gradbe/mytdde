@@ -20,9 +20,17 @@ int Flash_Write(ioAddress address, ioData data){
 
 		if (status & VppErrorBit)
 			return FLASH_VPP_ERROR;
+		else if (status & EraseErrorBit)
+			return FLASH_ERASE_ERROR;
+		else if (status & BlockProtectionErrorBit)
+			return FLASH_BLOCK_ERROR;
+		else if (status & ProgramErrorBit)
+			return FLASH_BLOCK_ERROR;
+		else 
+			return FLASH_UNKNOWN_ERROR;
 	}
-
-	IO_Read(address);
+	if (data != IO_Read(address))
+		return FLASH_READ_BACK_ERROR;
 
 	return FLASH_SUCCESS;
 }
