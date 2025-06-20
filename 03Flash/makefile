@@ -11,6 +11,7 @@ TEST_DIR = test
 
 # Explicitly include only the needed .c files (excluding real_hardware.c)
 C_SOURCES = $(SRC_DIR)/Flash.c\
+	    $(MOCK_DIR)/FakeMicroTime.c\
 	    $(MOCK_DIR)/MockIO.c 
 
 CPP_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
